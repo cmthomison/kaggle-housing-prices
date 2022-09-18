@@ -9,6 +9,8 @@ verify_ssl = true
 setuptools = "*"
 pandas = "*"
 scikit-learn = "*"
+jupyter = "*"
+pandas-profiling = "*"
 
 [requires]
 python_version = "3.8"
