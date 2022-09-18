@@ -11,6 +11,8 @@ pandas = "*"
 scikit-learn = "*"
 jupyter = "*"
 pandas-profiling = "*"
+seaborn = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.8"

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "1aa7bcea601581abb4e6a036ea7599d1b8c6de11e718098d3ef427f560197c39"
+            "sha256": "3067236c751502f614b42b2395d5617117320d625a6833861ba93cd4187534a1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -635,7 +635,7 @@
                 "sha256:f3840c280ebc87a48488a46f760ea1c0c0c83fcf7abbe2e6baf99d033fd35fd8",
                 "sha256:f814504e459c68118bf2246a530ed953ebd18213dc20e3da524174d84ed010b2"
             ],
-            "markers": "python_version >= '3.7'",
+            "index": "pypi",
             "version": "==3.5.3"
         },
         "matplotlib-inline": {
@@ -747,7 +747,7 @@
                 "sha256:f8c02ec3c4c4fcb718fdf89a6c6f709b14949408e8cf2a2be5bfa9c49548fd85",
                 "sha256:ffcf105ecdd9396e05a8e58e81faaaf34d3f9875f137c7372450baa5d77c9a54"
             ],
-            "markers": "python_version < '3.10' and platform_machine != 'aarch64' and platform_machine != 'arm64'",
+            "markers": "python_version >= '3.8'",
             "version": "==1.23.3"
         },
         "packaging": {
@@ -914,6 +914,7 @@
                 "sha256:fa768eff5f9f958270b081bb33581b4b569faabf8774726b283edb06617101dc",
                 "sha256:fac2d65901fb0fdf20363fbd345c01958a742f2dc62a8dd4495af66e3ff502a4"
             ],
+            "markers": "python_version >= '3.7'",
             "version": "==9.2.0"
         },
         "pkgutil-resolve-name": {
@@ -1338,7 +1339,7 @@
                 "sha256:85a6baa9b55f81a0623abddc4a26b334653ff4c6b18c418361de19dbba0ef283",
                 "sha256:cf45e9286d40826864be0e3c066f98536982baf701a7caa386511792d61ff4f6"
             ],
-            "markers": "python_version >= '3.6'",
+            "index": "pypi",
             "version": "==0.11.2"
         },
         "send2trash": {
