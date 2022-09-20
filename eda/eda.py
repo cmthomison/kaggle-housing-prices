@@ -53,12 +53,17 @@ size = [
     'PoolArea',
     'BedroomAbvGr',
     'KitchenAbvGr',
-    'TotRmsAbvGrd'
+    'TotRmsAbvGrd',
+    'BsmtFullBath',
+    'BsmtHalfBath',
+    'FullBath',
+    'HalfBath'
 ]
 
 age = [
     'YearBuilt',
-    'YearRemodAdd'
+    'YearRemodAdd',
+    'GarageYrBlt'
 ]
 
 quality = [
@@ -74,7 +79,9 @@ quality = [
     'ExterQual',
     'ExterCond',
     'BsmtQual',
-    'BmstCond'
+    'BsmtCond',
+    'Functional',
+    'FireplaceQu'
 ]
 
 amenities = [
@@ -84,14 +91,18 @@ amenities = [
     'GarageType',
     'Fence',
     'MiscFeature',
+    'MiscVal',
     'EnclosedPorch',
     '3SsnPorch',
     'ScreenPorch',
-    'Fireplaces'
+    'Fireplaces',
+    'BsmtExposure',
+    'PavedDrive'
 ]
 
 attributes = [
     'MSZoning',
+    'MSSubClass',
     'Street',
     'LotShape',
     'LandContour',
@@ -106,7 +117,12 @@ attributes = [
     'Exterior1st',
     'Exterior2nd',
     'MasVnrType',
-    'Foundation'
+    'Foundation',
+    'BsmtFinType1',
+    'BsmtFinType2',
+    'GarageFinish',
+    'Street',
+    'Alley'
 ]
 
 sale_deets = [
