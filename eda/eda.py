@@ -134,3 +134,24 @@ sale_deets = [
 
 cat_cols = size + age + quality + amenities + attributes + sale_deets
 to_categorize = [x for x in data.columns.tolist() if x not in cat_cols]
+
+# There is a bit of feature engineering I want to do right off the bat to make
+# a few of these features a little more useful initially.
+# [ ] Total bathrooms
+# [ ] First and second floor square footage and total square footage (inc bas)
+
+# Total bathrooms
+def fe_total_baths(row):
+
+    full_baths = row['FullBath'] + row['BsmtFullBath']
+    half_baths = (row['HalfBath'] + row['BsmtHalfBath'])/2
+
+    baths = full_baths + half_baths
+
+    return baths
+
+data['total_baths'] = data.apply(fe_total_baths, axis=1)
+
+# Square footage
+data['sf_above_grade'] = data['1stFlrSF'] + data['2ndFlrSF']
+data['sf_total'] = data['sf_above_grade'] + data['TotalBsmtSF']
