@@ -189,3 +189,39 @@ for col in review:
     scatter = sns.scatterplot(data=data, x=col, y='SalePrice').set(title=col)
     plt.show()
 
+# Review results and jot down some notes; I may transfer to a juptyer notebook
+# eventually.
+
+"""
+QUALITY features
+OverallQual *
+- There is definitely some relationship here- especially evident on the boxplot.
+- As quality increases, so does sale price.
+- No null values.
+
+OverallCond
+- There is a little something here, but not anything like OverallQual.
+- Part of the issue might be that over half of the records have a rating of 5,
+and the distribution for records with this ranking actually has a higher median
+sales price than a ranking of 9.
+- Possibly a data collection issue- some people thought the top score was 5?
+- Not sure this one is going to be super useful...
+
+KitchenQual *
+KitchenQual: Kitchen quality
+
+       Ex	Excellent
+       Gd	Good
+       TA	Typical/Average
+       Fa	Fair
+       Po	Poor
+
+- Nearly all are Good or Typica/Average, but it there does seem to be a
+relationship.
+- For models where multicollinearity is an issue, we'll definitely want to
+compare quality features.
+- No null values!
+
+GarageQual
+
+"""
