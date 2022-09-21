@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import pandas
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 sys.path.append('..')
 from support import data_functions as df
@@ -165,7 +166,8 @@ all_feat = size + age + quality + amenities + attributes + sale_deets + new_feat
 review = [x for x in all_feat if all_feat.count(x) > 1]
 
 # Loop through features to review value counts and null values.
-review = ['GarageYrBlt']
+
+review = quality
 for col in review:
 
     # Get some summary info.
@@ -176,11 +178,14 @@ for col in review:
     print(f'Null values: {data[col].isnull().sum()}')
 
     # We can also look at a bar chart of values.
-    sns.histplot(data=data, x=col)
+    hist = sns.histplot(data=data, x=col).set(title=col)
+    plt.show()
 
     # Generate a box plot to compare to the depenedent variable.
-    sns.boxplot(data=data, x=col, y='SalePrice')
+    box = sns.boxplot(data=data, x=col, y='SalePrice').set(title=col)
+    plt.show()
 
     # Take a look at a scatterplot as well.
-    sns.scatterplot(data=data, x=col, y='SalePrice')
+    scatter = sns.scatterplot(data=data, x=col, y='SalePrice').set(title=col)
+    plt.show()
 
