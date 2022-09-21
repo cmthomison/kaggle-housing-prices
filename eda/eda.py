@@ -29,9 +29,6 @@ data = df.load_train()
 sns.histplot(data, x='SalePrice')
 # Right-skewed- a long tail for the fancy houses.
 
-# Distribution of independent variables.
-num_cols, text_cols = df.col_types(data)
-
 # I'm also going to manually categorize the features into a few thematic
 # groups: size, age, quality, amenities, and sale details
 size = [
@@ -121,7 +118,6 @@ attributes = [
     'BsmtFinType1',
     'BsmtFinType2',
     'GarageFinish',
-    'Street',
     'Alley'
 ]
 
@@ -155,3 +151,36 @@ data['total_baths'] = data.apply(fe_total_baths, axis=1)
 # Square footage
 data['sf_above_grade'] = data['1stFlrSF'] + data['2ndFlrSF']
 data['sf_total'] = data['sf_above_grade'] + data['TotalBsmtSF']
+
+new_feats = ['total_baths', 'sf_above_grade', 'sf_total']
+
+# Distribution of independent variables.
+num_cols, text_cols = df.col_types(data)
+
+# Review value counts and null values for all features.
+all_feat = size + age + quality + amenities + attributes + sale_deets + new_feats
+
+# Check to see if a feature is duplicated.
+# Street was duplicated, but is now corrected.
+review = [x for x in all_feat if all_feat.count(x) > 1]
+
+# Loop through features to review value counts and null values.
+review = ['GarageYrBlt']
+for col in review:
+
+    # Get some summary info.
+    print(col)
+    print(data[col].dtypes)
+    print(data[col].value_counts())
+    print(data[col].describe())
+    print(f'Null values: {data[col].isnull().sum()}')
+
+    # We can also look at a bar chart of values.
+    sns.histplot(data=data, x=col)
+
+    # Generate a box plot to compare to the depenedent variable.
+    sns.boxplot(data=data, x=col, y='SalePrice')
+
+    # Take a look at a scatterplot as well.
+    sns.scatterplot(data=data, x=col, y='SalePrice')
+
