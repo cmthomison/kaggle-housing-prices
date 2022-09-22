@@ -223,5 +223,59 @@ compare quality features.
 - No null values!
 
 GarageQual
+- Nearly all values are Typical/Average, though Fair does have a lower median
+Sale Price.
 
+GarageCond
+- Looks very similar to GarageQual.
+- Might be able to use this with some other fields to create a 'rough shape'/
+'investor special' flag.
+- Both GarageQual and Garage Cond have 81 null values.
+
+HeatingQC *
+- The medians are fairly close, though 'Excellent' is visibly above the rest.
+I'm guessing it is being pulled up by the very high value homes.
+- I'm curious if this can help explain a lower than expected sales price- like
+everything is good, but you'll need to replace the furnace next year, so you
+agree on 10k less than asking/expected.
+
+PoolQC
+- Only 7 data points here.
+- I think the objective with the pools will be to determine how fancy of a pool
+it is, possibly in ground/above ground.
+- Only one of the 7 pools is in a crazy expensive house.
+
+Condition1 & Condition2
+- These are interesting- really not how I would like to handle proximity, but
+we can work with it.
+- Nothing major jumps out to me with the box plots.
+- I think what might be interesting would be to do a bit of feature engineering
+to create count fields for 'nearby_positive' and 'nearby_negative'.
+
+ExterQual *
+- This looks like a good one- we can see a relationship in the box plots,
+though it is clear that this feature alone could not be used.
+
+ExterCond
+- This one looks a little less useful than ExterQual- most of the values are
+Typical/Average.
+- We may want to compare to ExterCond/ExterQual against each other.
+
+BsmtQual *
+- We do have 37 null values, but there seems to be some relationship here in
+the boxplots.
+
+BsmtCond
+- Similar thoughts to ExterQual/ExterCond.
+
+Functional *
+- Okay so perhaps this is our 'investor special' field.
+- I'm not seeing anything immediately in the boxplots, BUT these types of
+deductions can happen to any type of home with any base value. A 10k furnace
+may need to be replaced in a 500k home just as it might in 250k home.
+- I'm flagging this for further testing/review.
+
+FireplaceQu
+- I'm thinking maybe we can do some FE to flag 'problematic fireplaces' with
+Poor/Fair values to use in conjunction with the fireplace count.
 """
