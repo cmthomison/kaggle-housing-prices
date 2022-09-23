@@ -167,7 +167,7 @@ review = [x for x in all_feat if all_feat.count(x) > 1]
 
 # Loop through features to review value counts and null values.
 
-review = quality
+review = attributes
 for col in review:
 
     # Get some summary info.
@@ -278,4 +278,35 @@ may need to be replaced in a 500k home just as it might in 250k home.
 FireplaceQu
 - I'm thinking maybe we can do some FE to flag 'problematic fireplaces' with
 Poor/Fair values to use in conjunction with the fireplace count.
+
+ATTRIBUTES
+
+MSZoning *
+- RL (low density res) contains most of the homes and has the largest spread of
+sale price values.
+- RM has a tighter IQR, though a lower median. Perhaps we'll want to look at
+this field in conjunction with neighborhood?
+- Floating Village what! Highest median and few outliers. Perhaps a condo or 
+houseboat situation where all units are fairly close in value?
+
+MSSubClass *
+- A lot going on here- we may want to group some of these classes, possibly
+by age.
+- This one also may be interesting to look at by neighborhood.
+
+Street
+- Paved vs. gravel
+- Only a few gravel street homes, though median is slightly lower.
+- Probalby won't end up using this one, at least initially.
+
+LotShape
+- Irregularly shaped lots tends to have a higher median home value?
+- My guess is that inner suburb/urban lots are on a grid and the fancier
+suburbs have slightly irregular lots.
+- Again, something to compare against neighborhoods.
+
+LandContour
+- Not sure that we'll get too much out of this one with the overwhelming 
+majority falling into Lvl.
+- I'm wondering if the hillside 
 """
