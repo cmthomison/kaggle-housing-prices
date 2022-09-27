@@ -308,5 +308,58 @@ suburbs have slightly irregular lots.
 LandContour
 - Not sure that we'll get too much out of this one with the overwhelming 
 majority falling into Lvl.
-- I'm wondering if the hillside 
+- I'm wondering if the hillside could be nice houses along the river?
+
+Utilities
+- Only one without sewer- probably not going to be very useful.
+
+LotConfig *
+- Interesting here is cul-d-sac vs no cul-d-sac- flags 'subdivision' and
+sale prices that come along with it
+
+LandSlope
+- Not a huge difference in the box plots- probably will not use initially.
+
+Neighborhood *
+- I think this will probably be a big one, especially paired with LotConfig,
+Total Square Footage, and MSZoning.
+
+BldgType
+- There might be something here- I would actually expect a bit more of a 
+difference between these groups.
+
+HouseStyle *
+- Looks like there is something here, though I would expect this to correlate
+to total SF (2 Story, 1 Story, etc.).
+- This does include if some of the area is unfininished- we may want to adjust
+the total SF calc to account for finished/unfinished basements.
+
+RoofStyle
+- Hip vs Gable may be interesting since there are quite a few data points in
+each and hip roofs cost more than gable roofs.
+
+RoofMatl
+- Very few records that are not CompShg.
+
+Exterior1st & Exterior2nd
+- May be something here, but probably will layer this one on after starting
+with neighborhood, size, etc.
+
+MasVnrType *
+- ACTUALLY- it may make sense to do a a bit of FE to create a feature with
+stone/brick/vinyl/other values.
+
+Foundation *
+- Could foundation type indicate base quality of the home?
+
+BsmtFinType1 & BsmtFinType2
+- Good quality living quarters vs. not perhaps? This one has a higher median
+than all other options that are fairly close.
+
+GarageFinish *
+- This might be a feature that helps to split some of the higher end homes
+(rough finish vs finished)
+
+Alley
+- Lots of null values- probably will not use, at least initially.
 """
