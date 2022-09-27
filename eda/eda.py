@@ -167,7 +167,7 @@ review = [x for x in all_feat if all_feat.count(x) > 1]
 
 # Loop through features to review value counts and null values.
 
-review = attributes
+review = amenities
 for col in review:
 
     # Get some summary info.
@@ -362,4 +362,18 @@ GarageFinish *
 
 Alley
 - Lots of null values- probably will not use, at least initially.
+
+AMENITIES
+- To move through this a bit quicker, I'm going to list those featues I'm
+interested in using only.
+
+Might be useful
+- CentralAir
+    - mostly Y, but those generally have a higher SalePrice.
+- GarageType
+    - May combine CarPort, Basment, and 2Types as 'Other'
+    - NA means no garage
+- Fireplaces
+- There were a few others that could be useful, but didn't stand out as much
+as those above.
 """
