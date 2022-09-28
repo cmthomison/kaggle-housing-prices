@@ -167,7 +167,7 @@ review = [x for x in all_feat if all_feat.count(x) > 1]
 
 # Loop through features to review value counts and null values.
 
-review = amenities
+review = new_feats
 for col in review:
 
     # Get some summary info.
@@ -376,4 +376,20 @@ Might be useful
 - Fireplaces
 - There were a few others that could be useful, but didn't stand out as much
 as those above.
+
+SIZE
+- TotalBsmtSF
+- 1stFlrSF
+- 2ndFlrSF
+- GrLivArea * (visually strong correlation)
+- GarageArea & GarageCars
+- BedroomAbvGr (maybe paired with neighborhood)
+- TotRmsAbvGrd
+- FullBath
+
+NEW FEATS
+- total_baths
+- sf_above_grade
+- sf_total * (visually strong correlation)
+    - appear to be two outliers- perhaps commercial or other funky zoning?
 """
