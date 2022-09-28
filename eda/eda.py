@@ -167,7 +167,7 @@ review = [x for x in all_feat if all_feat.count(x) > 1]
 
 # Loop through features to review value counts and null values.
 
-review = new_feats
+review = sale_deets
 for col in review:
 
     # Get some summary info.
@@ -392,4 +392,16 @@ NEW FEATS
 - sf_above_grade
 - sf_total * (visually strong correlation)
     - appear to be two outliers- perhaps commercial or other funky zoning?
+
+AGE
+- YearBuilt
+    - May be something here, definitely not the only factor though
+- YearRemodAdd & GarageYrBlt
+    - Similar- looks like there could be something
+
+SALE DEETS
+- SaleType
+    - Possibly make a 'new home' flag
+- Weirdly not seeing huge differences across month and year sold- perhaps
+we can try grouping into quarters.
 """
