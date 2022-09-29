@@ -411,7 +411,7 @@ we can try grouping into quarters.
 keep = [
     'OverallQual', 'KitchenQual', 'HeatingQC', 'ExterQual', 'BsmtQual',
     'Functional', 'MSZoning', 'MSSubClass', 'LotConfig', 'Neighborhood',
-    'HouseStyle', 'MasVnrType', 'Foundation', 'GarageFinish', 'CentralAir',
+    'MasVnrType', 'Foundation', 'GarageFinish', 'CentralAir',
     'GarageType', 'Fireplaces', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF',
     'GrLivArea', 'GarageArea', 'GarageCars', 'BedroomAbvGr', 'TotRmsAbvGrd',
     'FullBath', 'total_baths', 'sf_above_grade', 'sf_total', 'YearBuilt',
@@ -475,13 +475,51 @@ cat_functional = pd.Categorical(
     ordered=True
 )
 
-labels, unique = pd.factorize(functional, sort=True)
+labels, unique = pd.factorize(cat_functional, sort=True)
 int_data['Functional_e'] = labels
+
+# CentralAir
+cat_centralair = pd.Categorical(
+    int_data['CentralAir'], 
+    categories=['N', 'Y'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_centralair, sort=True)
+int_data['CentralAir_e'] = labels
+
+# Foundation- combine some values.
+def fe_foundation(row):
+    if row['Foundation'] == 'PConc':
+        return 'PConc'
+    elif row['Foundation'] == 'CBlock':
+        return 'CBlock'
+    else:
+        return 'Other'
+
+int_data['Foundation_e'] = int_data.apply(fe_foundation, axis=1)
+
+# Garage Type- combine some values.
+def fe_garagetype(row):
+    if row['GarageType'] in ['Attchd','BuiltIn']:
+        return 'Attached'
+    elif row['GarageType'] == 'Detchd':
+        return 'Detchd'
+    else:
+        return 'Other'
+
+int_data['GarageType_e'] = int_data.apply(fe_garagetype, axis=1)
+
+# NEXT 'TotalBsmtSF'
 
 # One Hot Encoding
 ohe = [
-    'MSZoning', 'MSSubClass', 'LotConfig', 'Neighborhood', 'HouseStyle', 
-    'MasVnrType'
+    'MSZoning', 'MSSubClass', 'LotConfig', 'Neighborhood', 
+    'MasVnrType', 'LotConfig', 'GarageFinish', 'CentralAir', 'Foundation_e',
+    'GarageType_e'
 ]
 
-drop = ['KitchenQual', 'HeatingQC', 'ExterQual', 'BsmtQual', 'Functional']
+drop = [
+    'KitchenQual', 'HeatingQC', 'ExterQual', 'BsmtQual', 'Functional',
+    'Foundation', 'CentralAir', 'GarageType'
+]
