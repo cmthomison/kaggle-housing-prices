@@ -6,8 +6,10 @@ import sys
 import os
 from pathlib import Path
 import pandas
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import OrdinalEncoder
 
 sys.path.append('..')
 from support import data_functions as df
@@ -405,3 +407,81 @@ SALE DEETS
 - Weirdly not seeing huge differences across month and year sold- perhaps
 we can try grouping into quarters.
 """
+
+keep = [
+    'OverallQual', 'KitchenQual', 'HeatingQC', 'ExterQual', 'BsmtQual',
+    'Functional', 'MSZoning', 'MSSubClass', 'LotConfig', 'Neighborhood',
+    'HouseStyle', 'MasVnrType', 'Foundation', 'GarageFinish', 'CentralAir',
+    'GarageType', 'Fireplaces', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF',
+    'GrLivArea', 'GarageArea', 'GarageCars', 'BedroomAbvGr', 'TotRmsAbvGrd',
+    'FullBath', 'total_baths', 'sf_above_grade', 'sf_total', 'YearBuilt',
+    'YearRemodAdd', 'GarageYrBlt', 'SaleType', 'SalePrice'
+]
+
+sns.heatmap(data[keep].corr())
+
+# Some light FE
+int_data = data[keep].reset_index(drop=True)
+
+# New house flag
+int_data['new_house'] = np.where(data['SaleType']=='New', True, False)
+int_data.drop(columns='SaleType', inplace=True)
+
+# Ordinal Encoding (via pd.factorize)
+# KitchenQual
+cat_kitchen_qual = pd.Categorical(
+    int_data['KitchenQual'], 
+    categories=['Po','Fa','TA','Gd','Ex'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_kitchen_qual, sort=True)
+int_data['KitchenQual_e'] = labels
+
+# HeatingQC
+cat_heating_qual = pd.Categorical(
+    int_data['HeatingQC'], 
+    categories=['Po','Fa','TA','Gd','Ex'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_heating_qual, sort=True)
+int_data['HeatingQC_e'] = labels
+
+# ExterQual
+cat_exter_qual = pd.Categorical(
+    int_data['ExterQual'], 
+    categories=['Po','Fa','TA','Gd','Ex'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_exter_qual, sort=True)
+int_data['ExterQual_e'] = labels
+
+# BsmtQual
+cat_bsmt_qual = pd.Categorical(
+    int_data['BsmtQual'], 
+    categories=['Po','Fa','TA','Gd','Ex'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_bsmt_qual, sort=True)
+int_data['BsmtQual_e'] = labels
+
+# Functional
+cat_functional = pd.Categorical(
+    int_data['Functional'], 
+    categories=['Sal','Sev','Maj2','Maj1','Mod','Min2','Min1','Typ'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(functional, sort=True)
+int_data['Functional_e'] = labels
+
+# One Hot Encoding
+ohe = [
+    'MSZoning', 'MSSubClass', 'LotConfig', 'Neighborhood', 'HouseStyle', 
+    'MasVnrType'
+]
+
+drop = ['KitchenQual', 'HeatingQC', 'ExterQual', 'BsmtQual', 'Functional']
