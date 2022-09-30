@@ -5,7 +5,7 @@ Exploratory data analysis for Kaggle housing prices.
 import sys
 import os
 from pathlib import Path
-import pandas
+import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -425,10 +425,6 @@ sns.heatmap(data[keep].corr())
 # Some light FE
 int_data = data[keep].reset_index(drop=True)
 
-# New house flag
-int_data['new_house'] = np.where(data['SaleType']=='New', True, False)
-int_data.drop(columns='SaleType', inplace=True)
-
 # Ordinal Encoding (via pd.factorize)
 # KitchenQual
 cat_kitchen_qual = pd.Categorical(
@@ -527,10 +523,26 @@ int_data['SaleType_e'] = int_data.apply(fe_saletype, axis=1)
 ohe = [
     'MSZoning', 'MSSubClass', 'LotConfig', 'Neighborhood', 
     'MasVnrType', 'LotConfig', 'GarageFinish', 'CentralAir', 'Foundation_e',
-    'GarageType_e'
+    'GarageType_e', 'SaleType_e'
 ]
+
+# Generate dummies, dropping one of the dummy fields for each column.
+int_data = pd.get_dummies(int_data, columns=ohe, drop_first=True)
 
 drop = [
     'KitchenQual', 'HeatingQC', 'ExterQual', 'BsmtQual', 'Functional',
-    'Foundation', 'CentralAir', 'GarageType', 'SaleType'
+    'Foundation', 'GarageType', 'SaleType'
 ]
+
+# Now we'll drop some of the fields that we already adjusted.
+int_data.drop(columns=drop, inplace=True)
+
+# Review column types and do a final check for nulls.
+col_types = pd.DataFrame(int_data.dtypes).reset_index()
+col_types.columns = ['column', 'dtype']
+col_types.dtype.value_counts()
+
+# Null check.
+null_review = pd.DataFrame(int_data.isnull().sum(axis=0)).reset_index()
+null_review.columns = ['column', 'null_values']
+null_review[null_review['null_values']>0]
