@@ -414,9 +414,11 @@ keep = [
     'MasVnrType', 'Foundation', 'GarageFinish', 'CentralAir',
     'GarageType', 'Fireplaces', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF',
     'GrLivArea', 'GarageArea', 'GarageCars', 'BedroomAbvGr', 'TotRmsAbvGrd',
-    'FullBath', 'total_baths', 'sf_above_grade', 'sf_total', 'YearBuilt',
-    'YearRemodAdd', 'GarageYrBlt', 'SaleType', 'SalePrice'
+    'FullBath', 'total_baths', 'sf_total', 'SaleType', 'SalePrice'
 ]
+
+# Excluding YearBuilt in favor of SaleType- 'New' is what we're looking to 
+# capture.
 
 sns.heatmap(data[keep].corr())
 
@@ -510,7 +512,16 @@ def fe_garagetype(row):
 
 int_data['GarageType_e'] = int_data.apply(fe_garagetype, axis=1)
 
-# NEXT 'TotalBsmtSF'
+# Sale Type- split into New, WD (warranty deed conventional), and other
+def fe_saletype(row):
+    if row['SaleType'] == 'New':
+        return 'New'
+    elif row['SaleType'] == 'WD':
+        return 'Conventional'
+    else:
+        return 'Other'
+
+int_data['SaleType_e'] = int_data.apply(fe_saletype, axis=1)
 
 # One Hot Encoding
 ohe = [
@@ -521,5 +532,5 @@ ohe = [
 
 drop = [
     'KitchenQual', 'HeatingQC', 'ExterQual', 'BsmtQual', 'Functional',
-    'Foundation', 'CentralAir', 'GarageType'
+    'Foundation', 'CentralAir', 'GarageType', 'SaleType'
 ]
