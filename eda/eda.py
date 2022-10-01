@@ -546,3 +546,12 @@ col_types.dtype.value_counts()
 null_review = pd.DataFrame(int_data.isnull().sum(axis=0)).reset_index()
 null_review.columns = ['column', 'null_values']
 null_review[null_review['null_values']>0]
+
+# Write csv for modeling.
+# We're going to have a lottt of clean up on this file and need to pull some
+# of these functions to prep the test set.
+# For now though, we're going to model.
+int_data.to_csv(
+    r'~/Documents/projects/kaggle-housing-prices/data/train_fe.csv',
+    index=False
+)
