@@ -555,3 +555,113 @@ int_data.to_csv(
     r'~/Documents/projects/kaggle-housing-prices/data/train_fe.csv',
     index=False
 )
+
+# Prepare test data for prediction and submission.
+test = pd.read_csv(r'~/Documents/projects/kaggle-housing-prices/data/test.csv')
+
+test['total_baths'] = test.apply(fe_total_baths, axis=1)
+test['sf_above_grade'] = test['1stFlrSF'] + test['2ndFlrSF']
+test['sf_total'] = test['sf_above_grade'] + test['TotalBsmtSF']
+
+keep = [
+    'OverallQual', 'KitchenQual', 'HeatingQC', 'ExterQual', 'BsmtQual',
+    'Functional', 'MSZoning', 'MSSubClass', 'LotConfig', 'Neighborhood',
+    'MasVnrType', 'Foundation', 'GarageFinish', 'CentralAir',
+    'GarageType', 'Fireplaces', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF',
+    'GrLivArea', 'GarageArea', 'GarageCars', 'BedroomAbvGr', 'TotRmsAbvGrd',
+    'FullBath', 'total_baths', 'sf_total', 'SaleType'
+]
+
+test = test[keep]
+
+# Ordinal Encoding (via pd.factorize)
+# KitchenQual
+cat_kitchen_qual = pd.Categorical(
+    test['KitchenQual'], 
+    categories=['Po','Fa','TA','Gd','Ex'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_kitchen_qual, sort=True)
+test['KitchenQual_e'] = labels
+
+# HeatingQC
+cat_heating_qual = pd.Categorical(
+    test['HeatingQC'], 
+    categories=['Po','Fa','TA','Gd','Ex'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_heating_qual, sort=True)
+test['HeatingQC_e'] = labels
+
+# ExterQual
+cat_exter_qual = pd.Categorical(
+    test['ExterQual'], 
+    categories=['Po','Fa','TA','Gd','Ex'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_exter_qual, sort=True)
+test['ExterQual_e'] = labels
+
+# BsmtQual
+cat_bsmt_qual = pd.Categorical(
+    test['BsmtQual'], 
+    categories=['Po','Fa','TA','Gd','Ex'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_bsmt_qual, sort=True)
+test['BsmtQual_e'] = labels
+
+# Functional
+cat_functional = pd.Categorical(
+    test['Functional'], 
+    categories=['Sal','Sev','Maj2','Maj1','Mod','Min2','Min1','Typ'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_functional, sort=True)
+test['Functional_e'] = labels
+
+# CentralAir
+cat_centralair = pd.Categorical(
+    test['CentralAir'], 
+    categories=['N', 'Y'],
+    ordered=True
+)
+
+labels, unique = pd.factorize(cat_centralair, sort=True)
+test['CentralAir_e'] = labels
+
+# Foundation- combine some values.
+test['Foundation_e'] = test.apply(fe_foundation, axis=1)
+
+# Garage Type- combine some values.
+test['GarageType_e'] = test.apply(fe_garagetype, axis=1)
+
+# Sale Type- split into New, WD (warranty deed conventional), and other
+test['SaleType_e'] = test.apply(fe_saletype, axis=1)
+
+# One Hot Encoding
+ohe = [
+    'MSZoning', 'MSSubClass', 'LotConfig', 'Neighborhood', 
+    'MasVnrType', 'LotConfig', 'GarageFinish', 'CentralAir', 'Foundation_e',
+    'GarageType_e', 'SaleType_e'
+]
+
+# Generate dummies, dropping one of the dummy fields for each column.
+test = pd.get_dummies(test, columns=ohe, drop_first=True)
+
+drop = [
+    'KitchenQual', 'HeatingQC', 'ExterQual', 'BsmtQual', 'Functional',
+    'Foundation', 'GarageType', 'SaleType'
+]
+
+# Now we'll drop some of the fields that we already adjusted.
+test.drop(columns=drop, inplace=True)
+test.to_csv(
+    r'~/Documents/projects/kaggle-housing-prices/data/test_fe.csv',
+    index=False
+)
