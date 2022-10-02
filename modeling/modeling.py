@@ -12,6 +12,7 @@ from sklearn.metrics import mean_squared_log_error
 
 # Load data.
 train = pd.read_csv(r'~/Documents/projects/kaggle-housing-prices/data/train_fe.csv')
+stest = pd.read_csv(r'~/Documents/projects/kaggle-housing-prices/data/test_fe.csv')
 
 # Let's start with linear regression.
 # At this time, I'm not going to transform any variables- but I may at a later
@@ -39,6 +40,9 @@ print(f"RMSLE: : {mean_squared_log_error(y_test,y_prediction,squared=False)}")
 
 # ^ RMSLE is not an option because there is a negative prediction.
 # We may need to handle by logging the SalePrice before training.
+
+# Generate a kaggle submission
+lr_submission = mod_lr.predict(stest)
 
 # Next going to try Ridge Regression (as I suspect we do not need all of the
 # variables that are currenlty included).

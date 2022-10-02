@@ -574,6 +574,9 @@ keep = [
 
 test = test[keep]
 
+# Fill sf_total null.
+test['sf_total'] = test['sf_total'].fillna(test.groupby(['Neighborhood','BedroomAbvGr'])['sf_total'].transform('mean'))
+
 # Ordinal Encoding (via pd.factorize)
 # KitchenQual
 cat_kitchen_qual = pd.Categorical(
@@ -661,6 +664,20 @@ drop = [
 
 # Now we'll drop some of the fields that we already adjusted.
 test.drop(columns=drop, inplace=True)
+
+null_review = pd.DataFrame(test.isnull().sum(axis=0)).reset_index()
+null_review.columns = ['column', 'null_values']
+null_review[null_review['null_values']>0]
+
+# Naturally there are some null values in test that were not in train.
+# For TotalBsmtSF, GarageArea, and GarageCars, I will assume 0
+# For total_baths, I will assume 1 (the minimum)
+# For sf_total, I will impute using the average SF given the number of 
+# bedrooms and neighborhood.
+null_set_1 = ['TotalBsmtSF', 'GarageArea', 'GarageCars']
+test[null_set_1] = test[null_set_1].fillna(0)
+test['total_baths'] = test['total_baths'].fillna(1)
+
 test.to_csv(
     r'~/Documents/projects/kaggle-housing-prices/data/test_fe.csv',
     index=False
