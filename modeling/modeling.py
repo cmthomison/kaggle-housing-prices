@@ -46,7 +46,7 @@ print(f"RMSLE: : {mean_squared_log_error(y_test,y_prediction,squared=False)}")
 review = [x for x in stest.columns.tolist() if x not in train.columns.tolist()]
 # It is a MSSubClass that wasn't in the training set.
 # For now, we will drop it.
-stest.drop(columns='MSSubClass_150', inplace=True)s
+stest.drop(columns='MSSubClass_150', inplace=True)
 
 # Generate a kaggle submission
 lr_pred = mod_lr.predict(stest)
