@@ -5,6 +5,7 @@ import os
 import sys
 
 from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
@@ -53,6 +54,27 @@ lr_pred = mod_lr.predict(stest)
 sub = otest[['Id']]
 sub['SalePrice'] = lr_pred
 sub.to_csv(r'~/Documents/projects/kaggle-housing-prices/data/submission_lr_1.csv', index=False)
+
+# Let's try Random Forest before reworking the codebase.
+mod_rf = RandomForestRegressor(n_estimators=100, random_state=23)
+  
+# Fit the model.
+mod_rf.fit(x_train, y_train)  
+
+# Evaluate.
+y_prediction =  mod_rf.predict(x_test)
+y_prediction
+
+# Scoring the model
+print(f"MSE: {mean_squared_error(y_test,y_prediction)}")
+print(f"RMSE: {mean_squared_error(y_test,y_prediction,squared=False)}")
+print(f"RMSLE: : {mean_squared_log_error(y_test,y_prediction,squared=False)}")
+
+# Generate a kaggle submission
+rf_pred = mod_rf.predict(stest)
+sub = otest[['Id']]
+sub['SalePrice'] = rf_pred
+sub.to_csv(r'~/Documents/projects/kaggle-housing-prices/data/submission_rf_1.csv', index=False)
 
 # Next going to try Ridge Regression (as I suspect we do not need all of the
 # variables that are currenlty included).
