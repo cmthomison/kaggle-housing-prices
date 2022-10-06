@@ -20,3 +20,4 @@
 
 ### Things to implement
 - [ ] For one hot encoding, use handle_unknown=False to ignore new categories.
+- [ ] Create json file to store model results/notes.
