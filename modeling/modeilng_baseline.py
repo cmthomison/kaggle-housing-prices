@@ -6,8 +6,6 @@ Example of a tranformation pipeline here: https://www.kaggle.com/code/fk0728/fea
 https://adamnovotny.com/blog/custom-scikit-learn-pipeline.html
 """
 
-<<<<<<< HEAD
-=======
 
 import datetime
 import multiprocessing
@@ -71,4 +69,3 @@ test_pipeline = Pipeline(steps=[
 ])
 
 test = test_pipeline.fit_transform(data)
->>>>>>> modeling
