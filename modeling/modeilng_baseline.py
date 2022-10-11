@@ -124,5 +124,10 @@ y = data[['SalePrice']]
 
 full_lr_model = lr_pipeline.fit(X, y)
 
-# Next steps:
-# - Run test data through pipeline to generate prediction for submission.
+# Generate predictions for submission.
+X_test = pd.read_csv(r'~/Documents/projects/kaggle-housing-prices/data/test.csv')
+y_test = full_lr_model.predict(X_test)
+
+submission = X_test[['Id']].reset_index(drop=True)
+submission['SalePrice'] = y_test
+submission.to_csv(r'~/Documents/projects/kaggle-housing-prices/data/submission_base_lr_1.csv', index=False)
