@@ -26,7 +26,10 @@
 ### Modeling Approach
 - [X] Build a baseline model- LR with total SF as the independent.
 - [ ] Deep dive on linear regression (~1 week)
+    - [ ] Build out FE classes to use with LR and other algorithms.
+    - [ ] Build out best attempt at LR with new features.
     - [ ] Capture/discuss assumptions.
+    - [ ] Review coefficient p-values.
     - [ ] Review relevant metrics.
 - [ ] Deep dive on bagging and boosting.
     - [ ] Try different algorithms.
